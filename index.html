@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>QR GENERATOR</title>
+</head>
+<body>
+  <div class="container">
+    <p>ENTER THE TEXT OR URL BELOW</p>
+    <input type="text" placeholder="Text or URL" id="qr-input">
+    <div id="img-Box">
+      <img src="" alt="" id="qr-img">
+    </div>
+    <button id="button" onclick="generateQr()">GENERATE QR</button>
+  </div>
+  
+  <script>
+
+      let imgBox = document.getElementById('img-Box');
+      let qrimg = document.getElementById('qr-img');
+      let qrinput = document.getElementById('qr-input');
+      setInterval(()=>{
+        if (qrinput.value.length == 0){
+          imgBox.style.visibility='hidden';
+          imgBox.style.maxHeight = '0';
+          
+      };
+      },500);
+     
+
+      function generateQr() {
+        if (qrinput.value.length >0){
+          qrimg.src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + qrinput.value ;
+          imgBox.classList.add('show-img');
+          imgBox.style.visibility='visible';
+          imgBox.style.maxHeight = '300px';
+
+        } else {
+          qrimg.src = '';
+          qrinput.classList.add('error');
+          const warning = document.createElement("p");
+          warning.style.cssText += 'color:red; font-size:12px; text-align:center; margin-top:10px';
+          
+          warning.innerHTML = "* PLEASE ENTER THE TEXT OR URL";
+          document.querySelector('.container').appendChild(warning);
+          
+          setTimeout(() => {
+            qrinput.classList.remove('error');
+            
+          },1000);
+
+          setTimeout(() => {
+            warning.remove();
+            
+          },5000);
+        };
+        
+
+      };
+
+
+  </script>
+</body>
+</html>
